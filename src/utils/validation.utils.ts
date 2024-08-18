@@ -67,7 +67,7 @@ const checkUsername = async (username: string) => {
   }
 };
 
-const checkUsernameExists = async (username: string) => {
+export const checkUsernameExists = async (username: string) => {
   // Check if the username already exists
 
   return (

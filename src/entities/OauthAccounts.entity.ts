@@ -1,12 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import { Users } from ".";
 
 @Entity()
 export class OauthAccounts {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  user_id: number;
 
   @Column()
   provider: string;
@@ -14,7 +13,7 @@ export class OauthAccounts {
   @Column()
   provider_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   access_token: string;
 
   @Column({ nullable: true })
@@ -22,6 +21,9 @@ export class OauthAccounts {
 
   @Column({ nullable: true })
   token_expires_at: Date;
+
+  @Column({ nullable: true })
+  refresh_token_expires_at: Date;
 
   @Column({ default: new Date() })
   created_at: Date;
