@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
 import { Users } from ".";
 
 @Entity()
@@ -6,6 +12,9 @@ export class OauthAccounts {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @OneToOne(() => Users)
+  @JoinColumn({ name: "user_id" })
+  user: Users;
 
   @Column()
   provider: string;
@@ -25,10 +34,10 @@ export class OauthAccounts {
   @Column({ nullable: true })
   refresh_token_expires_at: Date;
 
-  @Column({ default: new Date() })
+  @Column({ default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 
-  @Column({ default: new Date() })
+  @Column({ default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
   updated_at: Date;
 }
 

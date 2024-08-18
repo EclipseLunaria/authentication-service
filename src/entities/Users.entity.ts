@@ -15,16 +15,18 @@ export class Users {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 
-  @Column()
+  @Column({ default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
   updated_at: Date;
 
   @Column({ length: 255 })
   password_hash: string;
 
-  @OneToOne(() => OauthAccounts, { nullable: true })
+  @OneToOne(() => OauthAccounts, (OauthAccount) => OauthAccount.user, {
+    nullable: true,
+  })
   oauth_account: OauthAccounts;
 
   @OneToOne(() => ConnectedAccounts, { nullable: true })

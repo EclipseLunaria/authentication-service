@@ -1,3 +1,4 @@
 import { registerUserDirectly } from "./registration.controllers";
+import { loginController } from "./auth.controllers";
 
-export { registerUserDirectly };
+export { registerUserDirectly, loginController };
