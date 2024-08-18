@@ -1,4 +1,5 @@
 import { DataSourceOptions } from "typeorm";
+import { Users, OauthAccounts, ConnectedAccounts } from "./entities";
 
 const ormConfig: DataSourceOptions = {
   type: "postgres",
@@ -9,7 +10,7 @@ const ormConfig: DataSourceOptions = {
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [],
+  entities: [Users, OauthAccounts, ConnectedAccounts],
   subscribers: [],
   migrations: [],
 };
