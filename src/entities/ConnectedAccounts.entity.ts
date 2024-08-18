@@ -1,12 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Users } from "./Users";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToOne,
+} from "typeorm";
+import { Users } from "./Users.entity";
 
 @Entity()
 export class ConnectedAccounts {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Users)
+  @OneToOne(() => Users)
   user: Users;
 
   @Column()
@@ -18,10 +24,10 @@ export class ConnectedAccounts {
   @Column()
   access_token: string;
 
-  @Column()
+  @Column({ nullable: true })
   refresh_token: string;
 
-  @Column()
+  @Column({ nullable: true })
   token_expires_at: Date;
 
   @Column()

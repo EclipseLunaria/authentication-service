@@ -1,5 +1,5 @@
-import Users from "./Users";
-import OauthAccounts from "./OauthAccounts";
-import ConnectedAccounts from "./ConnectedAccounts";
+import Users from "./Users.entity";
+import OauthAccounts from "./OauthAccounts.entity";
+import ConnectedAccounts from "./ConnectedAccounts.entity";
 
 export { Users, OauthAccounts, ConnectedAccounts };
