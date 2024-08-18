@@ -10,8 +10,8 @@ AppDataSource.initialize()
     console.log("Database connected successfully");
     const app = express();
     const PORT = process.env.PORT || 5000;
+    router.use(express.json());
 
-    
     app.get("/", (req, res) => {
       res.send("Auth Service is up and running");
     });

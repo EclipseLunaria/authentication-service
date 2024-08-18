@@ -8,7 +8,6 @@ interface IUser {
   created_at: Date;
   updated_at: Date;
   password_hash: string;
-  password_salt: string;
   oauth_account?: IOauthAccount;
   mal_account?: IOauthAccount;
 }

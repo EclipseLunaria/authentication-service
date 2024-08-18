@@ -7,13 +7,13 @@ export class Users {
   id: number;
 
   @Column()
+  username: string;
+
+  @Column()
   name: string;
 
   @Column()
   email: string;
-
-  @Column()
-  password: string;
 
   @Column()
   created_at: Date;
@@ -23,9 +23,6 @@ export class Users {
 
   @Column({ length: 255 })
   password_hash: string;
-
-  @Column({ length: 255 })
-  password_salt: string;
 
   @OneToOne(() => OauthAccounts, { nullable: true })
   oauth_account: OauthAccounts;
