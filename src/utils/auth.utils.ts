@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
 import { OauthAccounts } from "../entities";
 import IAcessToken from "../interfaces/AccessToken.interface";
 import jwt from "jsonwebtoken";
+import { updateOauthAccount } from "./database.utils";
 
 const generateTokenString = (length: number) => {
   let result = "";
@@ -14,7 +14,7 @@ const generateTokenString = (length: number) => {
   return result;
 };
 
-const generateAccessToken = async () => {
+const generateAccessToken = async (oauthUser: OauthAccounts) => {
   const accessToken: IAcessToken = {
     access_token: generateTokenString(32),
     token_expires_at: new Date(Date.now() + 20 * 60 * 1000),
@@ -22,9 +22,15 @@ const generateAccessToken = async () => {
     refresh_expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     token_type: "grant",
   };
-
-  return accessToken;
+  oauthUser.access_token = accessToken.access_token;
+  oauthUser.refresh_token = accessToken.refresh_token;
+  oauthUser.token_expires_at = accessToken.token_expires_at;
+  oauthUser.refresh_token_expires_at = accessToken.refresh_expires_at;
+  oauthUser.updated_at = new Date();
+  await updateOauthAccount(oauthUser);
+  return generateJwtToken(oauthUser);
 };
+
 const generateJwtToken = (oauthUser: OauthAccounts) => {
   const tokenPayload = {
     id: oauthUser.id,
@@ -35,10 +41,7 @@ const generateJwtToken = (oauthUser: OauthAccounts) => {
 
   const token = jwt.sign(
     tokenPayload,
-    process.env.ACCESS_TOKEN_SECRET as string,
-    {
-      expiresIn: "1h", // Token expires in 1 hour
-    }
+    process.env.ACCESS_TOKEN_SECRET as string
   );
 
   return token;
