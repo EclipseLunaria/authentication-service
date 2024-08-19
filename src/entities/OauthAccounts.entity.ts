@@ -9,8 +9,8 @@ import { Users } from ".";
 
 @Entity()
 export class OauthAccounts {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @OneToOne(() => Users)
   @JoinColumn({ name: "user_id" })
