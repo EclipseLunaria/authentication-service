@@ -26,7 +26,6 @@ const generateAccessToken = async (oauthUser: OauthAccounts) => {
   oauthUser.access_token = accessToken.access_token;
   oauthUser.refresh_token = accessToken.refresh_token;
   oauthUser.token_expires_at = accessToken.token_expires_at;
-  oauthUser.refresh_token_expires_at = accessToken.refresh_expires_at;
   oauthUser.updated_at = new Date();
   return await updateOauthAccount(oauthUser);
 };

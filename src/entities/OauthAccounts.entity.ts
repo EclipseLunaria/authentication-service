@@ -31,9 +31,6 @@ export class OauthAccounts {
   @Column({ nullable: true })
   token_expires_at: Date;
 
-  @Column({ nullable: true })
-  refresh_token_expires_at: Date;
-
   @Column({ default: () => "CURRENT_TIMESTAMP" })
   created_at: Date;
 

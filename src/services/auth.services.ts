@@ -26,9 +26,7 @@ const handleTokenRefresh = async (clientToken: IClientJWT) => {
   if (oauthUser.refresh_token !== clientToken.refresh_token) {
     throw new Error("Invalid refresh token.");
   }
-  if (oauthUser.refresh_token_expires_at < new Date()) {
-    throw new Error("Refresh token expired.");
-  }
+
   if (oauthUser.token_expires_at > new Date()) {
     // return existing token
     console.log(
