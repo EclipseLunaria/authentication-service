@@ -13,10 +13,9 @@ AppDataSource.initialize()
     router.use(express.json());
 
     app.get("/", (req, res) => {
-      res.send("Auth Service is up and running");
+      res.send("Auth Service is up and running!");
     });
 
-    // Add the router to the Express app
     app.use("/", router);
 
     app.listen(PORT, () => {
