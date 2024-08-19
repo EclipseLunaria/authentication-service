@@ -4,6 +4,7 @@ interface IClientJWT {
   email: string;
   name: string;
   provider: string;
+  refresh_token: string;
 }
 
 export default IClientJWT;

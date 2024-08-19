@@ -1,7 +1,10 @@
 import express, { Router } from "express";
 
 import { loginController } from "../controllers";
-import { authenticateController } from "../controllers/auth.controllers";
+import {
+  authenticateController,
+  refreshTokenController,
+} from "../controllers/auth.controllers";
 
 const authRouter = Router();
 authRouter.use(express.json());
@@ -9,5 +12,7 @@ authRouter.use(express.json());
 authRouter.post("/login", loginController);
 
 authRouter.post("/verify", authenticateController);
+
+authRouter.post("/refresh", refreshTokenController);
 
 export { authRouter };
