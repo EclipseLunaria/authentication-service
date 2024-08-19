@@ -1,10 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from "typeorm";
 import OauthAccounts from "./OauthAccounts.entity";
-import ConnectedAccounts from "./ConnectedAccounts.entity";
 @Entity()
 export class Users {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
   @Column()
   username: string;
@@ -29,8 +28,8 @@ export class Users {
   })
   oauth_account: OauthAccounts;
 
-  @OneToOne(() => ConnectedAccounts, { nullable: true })
-  mal_account: ConnectedAccounts;
+  @OneToOne(() => OauthAccounts, { nullable: true })
+  mal_account: OauthAccounts;
 }
 
 export default Users;

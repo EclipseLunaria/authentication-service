@@ -15,7 +15,9 @@ const checkPassword = async (
 };
 
 const login = async (username: string, password: string) => {
+  console.log("username", username);
   const user = await getUser(username);
+  console.log("user", user);
   if (!user) {
     throw new Error("Username does not exist.");
   }

@@ -2,6 +2,7 @@ import { OauthAccounts } from "../entities";
 import IAcessToken from "../interfaces/AccessToken.interface";
 import jwt from "jsonwebtoken";
 import { updateOauthAccount } from "./database.utils";
+import IClientJWT from "../interfaces/ClientJWT.interface";
 
 const generateTokenString = (length: number) => {
   let result = "";
@@ -27,18 +28,21 @@ const generateAccessToken = async (oauthUser: OauthAccounts) => {
   oauthUser.token_expires_at = accessToken.token_expires_at;
   oauthUser.refresh_token_expires_at = accessToken.refresh_expires_at;
   oauthUser.updated_at = new Date();
-  await updateOauthAccount(oauthUser);
-  return generateJwtToken(oauthUser);
+  const updatedOauthAccount = await updateOauthAccount(oauthUser);
+  console.log("updatedOauthAccount", updatedOauthAccount);
+  return generateJwtToken(updatedOauthAccount);
 };
 
 const generateJwtToken = (oauthUser: OauthAccounts) => {
-  const tokenPayload = {
-    id: oauthUser.id,
-    token: oauthUser.access_token,
+  console.log("oauthUser", oauthUser);
+  const tokenPayload: IClientJWT = {
+    user_id: oauthUser.user.id,
+    username: oauthUser.user.username,
+    email: oauthUser.user.email,
+    name: oauthUser.user.name,
     provider: oauthUser.provider,
-    provider_id: oauthUser.provider_id,
   };
-
+  console.log("tokenPayload", tokenPayload);
   const token = jwt.sign(
     tokenPayload,
     process.env.ACCESS_TOKEN_SECRET as string
