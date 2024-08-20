@@ -3,8 +3,8 @@ import { Users } from "../entities";
 import { IRegistrationForm } from "../interfaces";
 
 export const validateRegistrationForm = async (body: IRegistrationForm) => {
-  const { username, name, email, password } = body;
-  if (!username || !name || !email || !password) {
+  const { username, email, password } = body;
+  if (!username || !email || !password) {
     throw new Error("Please fill out all fields.");
   }
   await checkUsername(username);

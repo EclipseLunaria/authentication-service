@@ -9,9 +9,6 @@ export class Users {
   username: string;
 
   @Column()
-  name: string;
-
-  @Column()
   email: string;
 
   @Column({ default: () => "CURRENT_TIMESTAMP" })

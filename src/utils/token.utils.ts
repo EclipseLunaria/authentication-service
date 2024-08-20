@@ -36,7 +36,6 @@ const generateJwtToken = (oauthUser: OauthAccounts, user: Users) => {
     user_id: user.id,
     username: user.username,
     email: user.email,
-    name: user.name,
     provider: oauthUser.provider,
     refresh_token: oauthUser.refresh_token,
   };

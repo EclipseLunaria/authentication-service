@@ -14,7 +14,6 @@ const createUser = async (body: IRegistrationForm) => {
   user.username = body.username;
   user.email = body.email;
   user.password_hash = await hashPassword(body.password);
-  user.name = body.name;
   user.created_at = new Date();
   user.updated_at = new Date();
   return await AppDataSource.getRepository(Users).save(user);
