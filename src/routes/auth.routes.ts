@@ -15,4 +15,5 @@ authRouter.post("/verify", authenticateController);
 
 authRouter.post("/refresh", refreshTokenController);
 
+authRouter.get("/mal",) 
 export { authRouter };

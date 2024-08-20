@@ -1,6 +1,8 @@
 import { AppDataSource } from "../config";
-import { Users } from "../entities";
+import { OauthAccounts, Users } from "../entities";
 import { IRegistrationForm } from "../interfaces";
+import IMALRegistration from "../interfaces/mal.registration";
+import { getMALUser } from "./oauth.utils";
 
 export const validateRegistrationForm = async (body: IRegistrationForm) => {
   const { username, email, password } = body;
@@ -10,6 +12,44 @@ export const validateRegistrationForm = async (body: IRegistrationForm) => {
   await checkUsername(username);
   await validateEmail(email);
   checkPassword(password);
+};
+
+export const validateMALRegistrationForm = async (body: IMALRegistration) => {
+  const {
+    username,
+    email,
+    access_token,
+    refresh_token,
+    provider_id,
+    provider,
+  } = body;
+  if (
+    !username ||
+    !email ||
+    !access_token ||
+    !refresh_token ||
+    !provider_id ||
+    !provider
+  ) {
+    throw new Error("Please fill out all fields.");
+  }
+  await getMALUser(access_token);
+  await checkMalIdExists(provider_id);
+  await checkUsername(username);
+  await validateEmail(email);
+  if (provider !== "myanimelist") {
+    throw new Error("Invalid provider.");
+  }
+  checkMalIdExists(provider_id);
+};
+
+const checkMalIdExists = async (provider_id: string) => {
+  // Check if the MAL ID already exists
+  return (
+    (await AppDataSource.getRepository(OauthAccounts).findOne({
+      where: { provider_id: provider_id, provider: "myanimelist" },
+    })) !== null
+  );
 };
 
 const checkPassword = (password: string) => {

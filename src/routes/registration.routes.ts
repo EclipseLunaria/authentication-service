@@ -1,5 +1,6 @@
 import express, { Request, Response, Router } from "express";
 import { registerUserDirectly } from "../controllers";
+import { registerMALUser } from "../controllers/registration.controllers";
 
 const registrationRouter = Router();
 registrationRouter.use(express.json());
@@ -8,5 +9,6 @@ registrationRouter.get("/", (req: Request, res: Response) => {
 });
 
 registrationRouter.post("/", registerUserDirectly);
+registrationRouter.post("/mal", registerMALUser);
 
 export default registrationRouter;

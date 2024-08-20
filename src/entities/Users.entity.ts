@@ -17,7 +17,7 @@ export class Users {
   @Column({ default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
   updated_at: Date;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, nullable: true })
   password_hash: string;
 
   @OneToOne(() => OauthAccounts, (OauthAccount) => OauthAccount.user, {
