@@ -25,7 +25,10 @@ const login = async (username: string, password: string) => {
   // get oauth account
   const oauthUser = await getUserOauth(user);
   const updatedOauthAccount = await generateAccessToken(oauthUser);
-  return generateJwtToken(updatedOauthAccount, user);
+  return {
+    access_token: generateJwtToken(updatedOauthAccount, user),
+    refresh_token: updatedOauthAccount.refresh_token,
+  };
 };
 
 export { hashPassword, checkPassword, login };

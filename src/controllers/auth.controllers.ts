@@ -10,9 +10,9 @@ import IClientJWT from "../interfaces/ClientJWT.interface";
 const loginController = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
-    const token = await login(username, password);
-    res.setHeader("Authorization", `Bearer ${token}`);
-    res.status(200).json({ token });
+    const credentials = await login(username, password);
+    res.setHeader("Authorization", `Bearer ${credentials.access_token}`);
+    res.status(200).json(credentials);
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
@@ -39,11 +39,9 @@ const refreshTokenController = async (req: Request, res: Response) => {
     console.log(decoded);
     const token = await handleTokenRefresh(decoded);
     res.setHeader("Authorization", `Bearer ${token}`);
-    res
-      .status(200)
-      .json({
-        message: lastToken !== token ? "Token refreshed" : "Token still valid",
-      });
+    res.status(200).json({
+      message: lastToken !== token ? "Token refreshed" : "Token still valid",
+    });
   } catch (e) {
     res.status(401).json({ error: e.message });
   }
