@@ -7,6 +7,7 @@ import {
 } from "../controllers/auth.controllers";
 import axios from "axios";
 import { getMALUser } from "../utils/oauth.utils";
+import { getOAuthAccountByProviderId } from "../utils/database.utils";
 
 const authRouter = Router();
 authRouter.use(express.json());
@@ -46,6 +47,9 @@ authRouter.get("/mal/callback", async (req, res) => {
     );
 
     const { access_token, refresh_token, expires_in, id } = response.data;
+    if (getOAuthAccountByProviderId(id)) {
+      return res.status(403).send("User already exists");
+    }
     const user_id = await getMALUser(access_token);
     console.log("data", response.data);
     const redirectUrl = `${process.env.CLIENT_BASE_URL}/register/mal?access_token=${access_token}&refresh_token=${refresh_token}&expires_in=${expires_in}&mal_id=${user_id}`;

@@ -5,7 +5,7 @@ import {
 } from "../utils/validation.utils";
 import { createMALUser, createUser } from "../utils/database.utils";
 import IMALRegistration from "../interfaces/mal.registration";
-import { generateJwtToken } from "../utils/token.utils";
+import { createClientBearerToken } from "../utils/token.utils";
 
 const handleRegistration = async (body: IRegistrationForm) => {
   await validateRegistrationForm(body);
@@ -18,7 +18,9 @@ const handleMALRegistration = async (body: IMALRegistration) => {
   console.log(body);
   await validateMALRegistrationForm(body);
   const oauthAccount = await createMALUser(body);
-  return generateJwtToken(oauthAccount, oauthAccount.user);
+  const bearerToken = await createClientBearerToken(oauthAccount);
+  console.log(bearerToken);
+  return bearerToken;
 };
 
 export { handleRegistration, handleMALRegistration };

@@ -33,6 +33,7 @@ export const validateMALRegistrationForm = async (body: IMALRegistration) => {
   ) {
     throw new Error("Please fill out all fields.");
   }
+
   await getMALUser(access_token);
   await checkMalIdExists(provider_id);
   await checkUsername(username);
@@ -40,7 +41,9 @@ export const validateMALRegistrationForm = async (body: IMALRegistration) => {
   if (provider !== "myanimelist") {
     throw new Error("Invalid provider.");
   }
-  checkMalIdExists(provider_id);
+  if (checkMalIdExists(provider_id)) {
+    throw new Error("MAL account already exists.");
+  }
 };
 
 const checkMalIdExists = async (provider_id: string) => {

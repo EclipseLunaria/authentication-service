@@ -49,4 +49,14 @@ const generateJwtToken = (oauthUser: OauthAccounts, user: Users) => {
   return token;
 };
 
-export { generateAccessToken, generateJwtToken };
+const createClientBearerToken = async (oauthUser: OauthAccounts) => {
+  const bearerToken = {
+    access_token: generateJwtToken(oauthUser, oauthUser.user),
+    token_type: "Bearer",
+    expires_at: new Date(oauthUser.token_expires_at),
+    refresh_token: oauthUser.refresh_token,
+  };
+  return bearerToken;
+};
+
+export { generateAccessToken, generateJwtToken, createClientBearerToken };

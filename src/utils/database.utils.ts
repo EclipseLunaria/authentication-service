@@ -54,6 +54,12 @@ const getUserOauth = async (user: Users) => {
   return oauthAccount;
 };
 
+const getOAuthAccountByProviderId = async (provider_id: string) => {
+  return await AppDataSource.getRepository(OauthAccounts).findOne({
+    where: { provider_id: provider_id },
+  });
+};
+
 const createOauthAccount = async (user: Users) => {
   const oauthAccount = new OauthAccounts();
   oauthAccount.user = user;
@@ -74,4 +80,5 @@ export {
   createUser,
   createOauthAccount,
   createMALUser,
+  getOAuthAccountByProviderId,
 };
