@@ -38,6 +38,8 @@ const generateJwtToken = (oauthUser: OauthAccounts, user: Users) => {
     email: user.email,
     provider: oauthUser.provider,
     refresh_token: oauthUser.refresh_token,
+    access_token: oauthUser.access_token,
+    token_expires_at: oauthUser.token_expires_at,
   };
   const token = jwt.sign(
     tokenPayload,

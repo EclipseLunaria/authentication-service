@@ -40,4 +40,6 @@ const handleTokenRefresh = async (clientToken: IClientJWT) => {
   return token;
 };
 
-export { handleTokenAuthentication, handleTokenRefresh };
+const handleMalLogin = async (malUser: any) => {};
+
+export { handleTokenAuthentication, handleTokenRefresh, handleMalLogin };

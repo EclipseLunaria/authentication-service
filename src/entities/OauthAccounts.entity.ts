@@ -12,7 +12,7 @@ export class OauthAccounts {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @OneToOne(() => Users)
+  @OneToOne(() => Users, { nullable: true })
   @JoinColumn({ name: "user_id" })
   user: Users;
 

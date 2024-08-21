@@ -22,6 +22,7 @@ const registerMALUser = async (req: Request, res: Response) => {
     await handleMALRegistration(body);
     res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ message: error.message });
   }
 
