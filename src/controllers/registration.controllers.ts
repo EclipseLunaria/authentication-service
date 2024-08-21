@@ -9,11 +9,10 @@ const registerUserDirectly = async (req: Request, res: Response) => {
   const body: IRegistrationForm = req.body;
   try {
     await handleRegistration(body);
+    res.redirect(`${process.env.CLIENT_BASE_URL}`)
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
-
-  res.json(body);
 };
 
 const registerMALUser = async (req: Request, res: Response) => {
