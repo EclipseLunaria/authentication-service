@@ -11,7 +11,7 @@ const loginController = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
     const credentials = await login(username, password);
-    res.setHeader("Authorization", `Bearer ${credentials.access_token}`);
+    res.setHeader("Authorization", `Bearer ${credentials}`);
     res.status(200).json(credentials);
   } catch (e) {
     res.status(400).json({ error: e.message });
@@ -46,4 +46,5 @@ const refreshTokenController = async (req: Request, res: Response) => {
     res.status(401).json({ error: e.message });
   }
 };
+
 export { loginController, authenticateController, refreshTokenController };

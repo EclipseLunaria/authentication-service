@@ -1,6 +1,8 @@
 import { hash, compare } from "bcrypt";
 import { getUser, getUserOauth } from "./database.utils";
 import { generateAccessToken, generateJwtToken } from "./token.utils";
+import { OauthAccounts, Users } from "../entities";
+import IBearerBody from "../interfaces/Bearer.interfaces";
 
 const hashPassword = async (password: string): Promise<string> => {
   const hashedPassword = await hash(password, 10);
@@ -24,11 +26,27 @@ const login = async (username: string, password: string) => {
   }
   // get oauth account
   const oauthUser = await getUserOauth(user);
-  const updatedOauthAccount = await generateAccessToken(oauthUser);
-  return {
-    access_token: generateJwtToken(updatedOauthAccount, user),
-    refresh_token: updatedOauthAccount.refresh_token,
-  };
+  return JSON.stringify(await createBearerResponse(oauthUser, user));
 };
 
 export { hashPassword, checkPassword, login };
+
+const createBearerResponse = async (oauthUser: OauthAccounts, user: Users) => {
+  const patchedOauthAccount = await generateAccessToken(oauthUser);
+
+  const body: IBearerBody = {
+    access_token: generateJwtToken(patchedOauthAccount, user),
+    token_expires_in:
+      Number(patchedOauthAccount.token_expires_at) - Number(Date.now()),
+    refresh_token: patchedOauthAccount.refresh_token,
+    token_type: "Bearer",
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      roles: ["user"],
+    },
+  };
+  console.log("Bearer Body:", body);
+  return body;
+};
