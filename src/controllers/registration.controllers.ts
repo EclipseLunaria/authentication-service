@@ -5,6 +5,7 @@ import {
 } from "../services/registration.services";
 import { IRegistrationForm } from "../interfaces";
 import IMALRegistration from "../interfaces/mal.registration";
+
 const registerUserDirectly = async (req: Request, res: Response) => {
   const body: IRegistrationForm = req.body;
   try {
